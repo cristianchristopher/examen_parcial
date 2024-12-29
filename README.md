@@ -1,7 +1,10 @@
 # examen_parcial 
 
 
-PROGRAMAS UTILIZADOS
+PROGRAMAS UTILIZADOS:
+
 -Visual Code
+
 -NodeJS
+
 -MySql Workbench
