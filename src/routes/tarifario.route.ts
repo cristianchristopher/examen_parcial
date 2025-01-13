@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { insertarTarifario, listarTarifario, obtenerTarifario, actualizarTarifario, darBajaTarifario } from "../controllers/tarifario.controller";
+import { insertarTarifario, listarTarifarios, obtenerTarifario, actualizarTarifario, darBajaTarifario } from "../controllers/tarifario.controller";
 
 
 
@@ -7,7 +7,7 @@ import { insertarTarifario, listarTarifario, obtenerTarifario, actualizarTarifar
 const router:Router = Router();
 
 router.post('/',insertarTarifario);
-router.get('/',listarTarifario);
+router.get('/',listarTarifarios);
 router.get('/:idTarifario',obtenerTarifario);
 router.put('/:idTarifario',actualizarTarifario);
 router.delete('/:idTarifario',darBajaTarifario);

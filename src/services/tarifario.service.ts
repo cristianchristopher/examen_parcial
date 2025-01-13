@@ -10,7 +10,7 @@ export const insertarTarifario=async (data: Partial<Tarifario>): Promise<Tarifar
     return await repository.findOne({where: {idTarifario: newTarifario.idTarifario}});
 }
 
-export  const listarTarifario=  async ():Promise<Tarifario[]> =>  {
+export  const listarTarifarios=  async ():Promise<Tarifario[]> =>  {
     return await repository.find({where: {estadoAuditoria: EstadoAuditoria.ACTIVO}});
 }
 

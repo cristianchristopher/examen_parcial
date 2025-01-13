@@ -3,10 +3,16 @@ import { Tarifario } from "../entities/tarifario";
 import * as tarifarioService from "../services/tarifario.service";
 import { BaseResponse } from "../shared/base.response";
 import { Message } from "../enums/message";
+import { actualizarTarifarioSchema, insertarTarifarioSchema } from "../validators/tarifario.schema";
 
 export  const insertarTarifario =async (req: Request, res:Response) => {
     try{
-        console.log('insertarTarifario')
+        console.log('insertarTarifario');
+        const { error } = insertarTarifarioSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,400));
+            return;
+        }
         const tarifario: Partial<Tarifario> = req.body;
         const newTarifario: Tarifario =await tarifarioService.insertarTarifario(tarifario);
         res.json(BaseResponse.success(newTarifario,Message.INSERTADO_OK));
@@ -16,10 +22,10 @@ export  const insertarTarifario =async (req: Request, res:Response) => {
     }
 }
 
-export const listarTarifario =async(req: Request,res:Response)  =>{
+export const listarTarifarios =async(req: Request,res:Response)  =>{
     try{
-        console.log('listarTarifario')
-        const tarifario:Tarifario[]=await tarifarioService.listarTarifario();
+        console.log('listarTarifario');
+        const tarifario:Tarifario[]=await tarifarioService.listarTarifarios();
         res.json(BaseResponse.success(tarifario));
     }catch(error){
         console.error(error);
@@ -45,6 +51,11 @@ export const obtenerTarifario = async (req: Request, res:Response) =>  {
 export const actualizarTarifario =  async (req: Request,res: Response) => {
     try{
         const {idTarifario} = req.params;
+        const {error} = actualizarTarifarioSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,400));
+            return;
+        }
         const tarifario: Partial<Tarifario>=req.body;
 
         if(!(await tarifarioService.obtenerTarifario(Number(idTarifario)))){

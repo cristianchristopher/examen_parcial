@@ -2,6 +2,8 @@ import { DataSource } from "typeorm";
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_TYPE, DB_USERNAME } from "../shared/constants";
 import { Movimiento } from "../entities/movimiento";
 import { Tarifario } from "../entities/tarifario";
+import { Nacionalidad } from "../entities/nacionalidad";
+import { Cliente } from "../entities/cliente";
 
 export const AppDataSource =  new DataSource({
     type: DB_TYPE as any,
@@ -11,6 +13,8 @@ export const AppDataSource =  new DataSource({
     password:  DB_PASSWORD,
     database: DB_DATABASE,
     entities:[Movimiento,
-            Tarifario
+            Tarifario,
+            Nacionalidad,
+            Cliente
             ],
 });
