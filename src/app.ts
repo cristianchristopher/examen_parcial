@@ -5,6 +5,9 @@ import movimientoRouter from './routes/movimiento.route';
 import tarifarioRouter from './routes/tarifario.route';
 import clienteRouter from './routes/cliente.route';
 import nacionalidadRouter from './routes/nacionalidad.route';
+import vehiculoRouter from './routes/vehiculo.route';
+import trabajadorRouter from './routes/trabajador.route';
+import usuarioRouter from './routes/usuario.route';
 
 const app: Application = express();
 
@@ -16,6 +19,9 @@ app.use('/api/e1/movimientos',movimientoRouter);
 app.use('/api/e1/tarifarios',tarifarioRouter);
 app.use('/api/e1/clientes',clienteRouter);
 app.use('/api/e1/nacionalidades',nacionalidadRouter);
+app.use('/api/e1/vehiculos',vehiculoRouter);
+app.use('/api/e1/trabajadores',trabajadorRouter);
+app.use('/api/e1/usuarios',usuarioRouter);
 
 export const starServer =async ()  =>{
     try{

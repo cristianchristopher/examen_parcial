@@ -1,22 +1,28 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity,OneToMany, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Nacionalidad } from "./nacionalidad";
+import { Usuario } from "./usuario";
 
-@Entity('clientes')
-export class Cliente {
-    @PrimaryGeneratedColumn({name: 'id_cliente'})
-    idCliente: number;
+@Entity('trabajadores')
+export class Trabajador {
+    @PrimaryGeneratedColumn({name: 'id_trabajador'})
+    idTrabajador: number;
+
+    
 
     @Column({name: 'nombres'})
     nombres: String;
 
     @Column({name: 'apellido_paterno'})
     apellidoPaterno: String;
-
+ 
     @Column({name:  'apellido_materno'})
     apellidoMaterno: String;
 
-    @Column({name: 'dni'})
-    dni: String;
+    @Column({name: 'tipo_documento'})
+    tipo_documento: String;
+
+    @Column({name: 'numero_documento'})
+    numero_documento: String;
 
     @Column({name: 'direccion'})
     direccion: String;
@@ -24,7 +30,7 @@ export class Cliente {
     @Column({name: 'telefono'})
     telefono: String;
 
-    @ManyToOne(() => Nacionalidad, (nacionalidad) => nacionalidad.clientes)
+    @ManyToOne(() => Nacionalidad, (nacionalidad) => nacionalidad.trabajadores)
     @JoinColumn({name: 'id_nacionalidad'})
     nacionalidad: Nacionalidad;
 
@@ -33,6 +39,9 @@ export class Cliente {
     
     @CreateDateColumn({name: 'fecha_creacion_auditoria'})
     fechaCreacionAuditoria: Date;
+
+    @OneToMany(()=>Usuario,(usuario)=>usuario.trabajador)
+    usuarios: Usuario[];
 
 
 }

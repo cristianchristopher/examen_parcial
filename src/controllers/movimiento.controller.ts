@@ -4,10 +4,16 @@ import { Request,Response} from 'express';
 import { BaseResponse } from "../shared/base.response";
 import { Message } from "../enums/message";
 import { isModuleNamespaceObject } from "util/types";
+import { actualizarMovimientoSchema, insertarMovimientoSchema } from "../validators/movimiento.Schema";
 
 export const insertarMovimiento  = async (req: Request, res: Response) => {
     try{
-        console.log('insertarMovimiento')
+        console.log('insertarMovimiento');
+        const {error} = insertarMovimientoSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,400));
+            return;
+        }
         const movimiento: Partial<Movimiento> =req.body;
         const newMovimiento: Movimiento = await movimientoService.insertarMovimiento(movimiento);
         res.json(BaseResponse.success(newMovimiento, Message.INSERTADO_OK));
@@ -47,6 +53,11 @@ export const obtenerMovimiento = async (req: Request,  res: Response) => {
 export const actualizarMovimiento = async (req:Request, res: Response) => {
     try{
         const { idMovimiento } =req.params;
+        const {error} = actualizarMovimientoSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,400));
+            return;
+        }
         const movimiento: Partial<Movimiento> =req.body;
         if(!(await movimientoService.obtenerMovimiento(Number(idMovimiento)))){
             res.status(404).json(BaseResponse.error(Message.NOT_DOUND,404))

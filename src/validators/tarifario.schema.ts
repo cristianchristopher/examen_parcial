@@ -22,4 +22,4 @@ export const actualizarTarifarioSchema = Joi.object({
                     .max(6)
                     .precision(2)
                     .optional()
-})
+});

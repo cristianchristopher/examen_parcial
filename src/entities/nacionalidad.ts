@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Cliente } from "./cliente";
-
+import { Trabajador } from "./trabajador";
 
 @Entity('nacionalidades')
 export class Nacionalidad {
@@ -19,6 +19,10 @@ export class Nacionalidad {
     @CreateDateColumn({name: 'fecha_creacion_auditoria'})
     fechaCreacionAuditoria: Date;
 
-    @OneToMany(()=>Cliente,(nacionalidad)=>nacionalidad.nacionalidad)
-    nacionalidades: Nacionalidad[];
+    @OneToMany(() => Cliente, (cliente) => cliente.nacionalidad)
+    clientes: Cliente[];
+
+   
+    @OneToMany(() => Trabajador, (trabajador) => trabajador.nacionalidad)
+    trabajadores: Trabajador[];
 }

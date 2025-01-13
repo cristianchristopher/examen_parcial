@@ -3,10 +3,16 @@ import { Nacionalidad } from "../entities/nacionalidad";
 import * as NacionalidadService from "../services/nacionalidad.service"
 import { BaseResponse } from "../shared/base.response";
 import { Message } from "../enums/message";
+import { actualizarNacionalidadSchema, insertarNacionalidadSchema } from "../validators/nacionalidad.Schema";
 
 export const insertarNacionalidad = async ( req: Request, res: Response) =>{
     try{
         console.log('insertarNacionalidad');
+        const { error } = insertarNacionalidadSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,400));
+            return;
+        }
         const nacionalidad: Partial<Nacionalidad> = req.body;
         const newNacionalidad: Nacionalidad =  await NacionalidadService.insertarNacionalidad(nacionalidad);
         res.json(BaseResponse.success(newNacionalidad,Message.INSERTADO_OK));
@@ -45,6 +51,11 @@ export const obtenerNacionalidad =  async (  req:Request, res:Response) =>{
 export const actualizarNacionalidad  = async (req: Request, res: Response) => {
     try{
         const {idNacionalidad} = req.params;
+        const {error} = actualizarNacionalidadSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,400));
+            return;
+        }
         const nacionalidad:  Partial<Nacionalidad>=req.body;
         if(!(await NacionalidadService.obtenerNacionalidad(Number(idNacionalidad)))){
             res.status(404).json(BaseResponse.error(Message.NOT_DOUND,404))

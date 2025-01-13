@@ -4,6 +4,9 @@ import { Movimiento } from "../entities/movimiento";
 import { Tarifario } from "../entities/tarifario";
 import { Nacionalidad } from "../entities/nacionalidad";
 import { Cliente } from "../entities/cliente";
+import { Trabajador } from "../entities/trabajador";
+import { Vehiculo } from "../entities/vehiculo";
+import { Usuario } from "../entities/usuario";
 
 export const AppDataSource =  new DataSource({
     type: DB_TYPE as any,
@@ -15,6 +18,10 @@ export const AppDataSource =  new DataSource({
     entities:[Movimiento,
             Tarifario,
             Nacionalidad,
-            Cliente
+            Cliente,
+            Trabajador,
+            Vehiculo,
+            Usuario,
+            Movimiento
             ],
 });

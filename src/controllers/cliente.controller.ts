@@ -3,10 +3,16 @@ import { Cliente } from "../entities/cliente";
 import * as clienteService from  "../services/cliente.service"
 import { BaseResponse } from "../shared/base.response";
 import { Message } from "../enums/message";
+import { actualizarClienteSchema, insertarClienteSchema } from "../validators/cliente.Schema";
 
 export const insertarCliente = async (req:  Request, res: Response) =>{
     try{
         console.log('insertarCliente');
+        const {error} =insertarClienteSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,100));
+            return;
+        }
         const cliente:Partial<Cliente> = req.body;
         const newCliente: Cliente = await clienteService.insertarCliente(cliente);
         res.json(BaseResponse.success(newCliente, Message.INSERTADO_OK));
@@ -45,6 +51,11 @@ try{
 export const actualizarCliente = async(req: Request, res: Response) =>{
     try{
         const { idCliente } = req.params;
+        const {error} =actualizarClienteSchema.validate(req.body);
+        if(error){
+            res.status(400).json(BaseResponse.error(error.message,400));
+            return;
+        }
          const cliente: Partial<Cliente>=req.body;
         
                 if(!(await clienteService.obtenerCliente(Number(idCliente)))){
